@@ -1,0 +1,25 @@
+const knowledge = require('../data/knowledge.json');
+
+function send(response, status, body) {
+  response.status(status).setHeader('Content-Type', 'application/json').end(JSON.stringify(body));
+}
+
+module.exports = async (request, response) => {
+  if (request.method !== 'POST') return send(response, 405, { error: 'Method not allowed.' });
+  if (!process.env.GROQ_API_KEY) return send(response, 500, { error: 'GROQ_API_KEY belum diset di environment Vercel.' });
+  const { message, history = [], sources = [] } = request.body || {};
+  if (!message) return send(response, 400, { error: 'Pesan wajib diisi.' });
+  const sourceContext = sources.map((source) => `SUMBER: ${source.title} (${source.url})\n${source.text}`).join('\n\n');
+  const context = `DATA DUMMY: ${JSON.stringify(knowledge)}\n\nSUMBER HALAMAN:\n${sourceContext || 'Belum ada sumber halaman.'}`.slice(0, 30000);
+  const messages = [
+    { role: 'system', content: `Kamu adalah Tanya AI, asisten berbahasa Indonesia yang ringkas, jernih, dan jujur. Jawab berdasarkan konteks yang diberikan. Jika informasi tidak ada di konteks, katakan bahwa kamu belum menemukan jawabannya. Jangan mengarang sumber.\n\nKONTEKS PENGETAHUAN:\n${context}` },
+    ...history.slice(0, -1).filter((item) => ['user', 'assistant'].includes(item.role)).map((item) => ({ role: item.role, content: item.content })).slice(-8),
+    { role: 'user', content: message },
+  ];
+  try {
+    const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.GROQ_API_KEY}` }, body: JSON.stringify({ model: process.env.GROQ_MODEL || 'llama-3.3-70b-versatile', messages, temperature: 0.35, max_tokens: 700 }) });
+    const result = await groqResponse.json();
+    if (!groqResponse.ok) return send(response, groqResponse.status, { error: result.error?.message || 'Groq menolak permintaan.' });
+    return send(response, 200, { answer: result.choices?.[0]?.message?.content || 'Belum ada jawaban.' });
+  } catch (error) { return send(response, 502, { error: `Koneksi ke Groq gagal: ${error.message}` }); }
+};

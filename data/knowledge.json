@@ -1,0 +1,10 @@
+{
+  "appName": "Tanya AI",
+  "description": "Asisten percakapan yang menjawab berdasarkan data dummy dan isi halaman web yang ditambahkan pengguna.",
+  "dummyFacts": [
+    "Tanya AI dapat merangkum halaman web berbahasa Indonesia maupun Inggris.",
+    "Sumber web hanya digunakan selama percakapan aktif dan tidak disimpan ke database.",
+    "Jawaban terbaik didapatkan dengan pertanyaan yang spesifik terhadap sumber.",
+    "Tanya AI menggunakan Groq untuk menghasilkan jawaban dengan cepat."
+  ]
+}
