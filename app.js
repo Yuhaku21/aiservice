@@ -104,4 +104,4 @@ chatForm.addEventListener('submit', async (event) => {
 
 messageInput.addEventListener('input', () => { messageInput.style.height = 'auto'; messageInput.style.height = `${Math.min(messageInput.scrollHeight, 120)}px`; });
 messageInput.addEventListener('keydown', (event) => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); chatForm.requestSubmit(); } });
-document.querySelector('#clear-chat').addEventListener('click', () => { state.messages = []; messages.innerHTML = ''; addMessage('assistant', 'Percakapan baru dimulai. Apa yang ingin kamu tanyakan tentang Ayowebku?'); });
+document.querySelector('#clear-chat')?.addEventListener('click', () => { state.messages = []; messages.innerHTML = ''; addMessage('assistant', 'Percakapan baru dimulai. Apa yang ingin kamu tanyakan tentang Ayowebku?'); });
