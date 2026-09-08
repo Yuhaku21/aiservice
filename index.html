@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f4efe7" />
-    <title>Tanya AI - Temukan jawaban dari web</title>
+    <meta name="theme-color" content="#6f43d6" />
+    <title>Ayowebku Assist - Customer Service AI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
@@ -13,64 +13,62 @@
   <body>
     <div class="page-shell">
       <header class="topbar">
-        <a class="brand" href="/" aria-label="Tanya AI beranda">
-          <span class="brand-mark">t</span>
-          <span>Tanya <em>AI</em></span>
+        <a class="brand" href="https://ayowebku.com/" aria-label="Kembali ke Ayowebku">
+          <span class="brand-mark">a</span>
+          <span>ayowebku <em>assist</em></span>
         </a>
-        <div class="status-pill"><span class="status-dot"></span> Groq connected</div>
+        <div class="topbar-actions">
+          <div class="status-pill"><span class="status-dot"></span> AI online</div>
+          <a class="back-button" href="https://ayowebku.com/">&larr; Kembali ke website</a>
+        </div>
       </header>
 
       <main class="workspace">
         <section class="intro-panel">
-          <p class="eyebrow">PENGETAHUAN YANG BISA DIAJAK BICARA</p>
-          <h1>Tanya apa saja.<br /><span>Dapatkan konteksnya.</span></h1>
-          <p class="intro-copy">Masukkan halaman web sebagai sumber pengetahuan, lalu biarkan Tanya AI merangkumnya untukmu.</p>
+          <div class="welcome-badge"><span class="sparkle">✦</span> AYOWEBKU CUSTOMER CARE</div>
+          <h1>Butuh bantuan?<br /><span>Yuk ngobrol.</span></h1>
+          <p class="intro-copy">Ayowebku Assist siap menjawab pertanyaan seputar layanan dan informasi Ayowebku berdasarkan website resminya.</p>
 
-          <form class="source-form" id="source-form">
-            <label for="source-url">Tambahkan sumber web</label>
-            <div class="url-field">
-              <span class="url-icon">↗</span>
-              <input id="source-url" type="url" placeholder="https://contoh.com/artikel" autocomplete="url" required />
-              <button class="add-button" type="submit">Baca halaman</button>
-            </div>
-            <p class="form-hint" id="source-status">Tanya AI akan mengambil teks utama dari halaman tersebut.</p>
-          </form>
+          <div class="source-overview">
+            <div class="source-heading"><span class="source-icon">✦</span><div><strong>Sumber informasi aktif</strong><small id="source-status">Menyiapkan informasi Ayowebku...</small></div></div>
+            <a class="source-link" href="https://ayowebku.com/" target="_blank" rel="noreferrer">ayowebku.com <span>&nearr;</span></a>
+          </div>
 
           <div class="source-list" id="source-list" aria-live="polite">
-            <div class="source-empty" id="source-empty">Belum ada sumber tambahan</div>
+            <div class="source-empty" id="source-empty">Memuat data website resmi...</div>
           </div>
         </section>
 
-        <section class="chat-panel" aria-label="Percakapan Tanya AI">
+        <section class="chat-panel" aria-label="Percakapan Ayowebku Assist">
           <div class="chat-header">
             <div>
-              <p class="eyebrow">RUANG TANYA</p>
-              <h2>Obrolan baru</h2>
+              <p class="eyebrow">AYOWEBKU ASSIST</p>
+              <h2>Halo, ada yang bisa kami bantu?</h2>
             </div>
-            <button class="clear-button" id="clear-chat" type="button" title="Mulai obrolan baru">Reset</button>
+            <button class="clear-button" id="clear-chat" type="button" title="Mulai obrolan baru">Mulai baru</button>
           </div>
 
           <div class="messages" id="messages" aria-live="polite">
             <article class="message assistant-message">
-              <div class="avatar">t</div>
+              <div class="avatar">a</div>
               <div class="message-body">
-                <p class="message-name">Tanya AI <span>baru saja</span></p>
-                <p>Halo! Saya siap membantu memahami sumber yang kamu tambahkan. Mau mulai dari mana?</p>
+                <p class="message-name">Ayowebku Assist <span>baru saja</span></p>
+                <p>Halo! Saya Ayowebku Assist. Ada yang ingin kamu tanyakan tentang Ayowebku?</p>
               </div>
             </article>
           </div>
 
           <form class="chat-form" id="chat-form">
-            <textarea id="message-input" rows="1" placeholder="Tanyakan sesuatu tentang sumbermu..." aria-label="Pesan" required></textarea>
+            <textarea id="message-input" rows="1" placeholder="Ketik pertanyaan kamu di sini..." aria-label="Pesan" required></textarea>
             <div class="composer-footer">
-              <span class="composer-note">Jawaban dibuat berdasarkan konteks yang tersedia</span>
+              <span class="composer-note">Jawaban berdasarkan website resmi Ayowebku</span>
               <button class="send-button" type="submit" aria-label="Kirim pesan" title="Kirim pesan">Kirim <span>↗</span></button>
             </div>
           </form>
         </section>
       </main>
 
-      <footer class="footer"><span>tanya.ai</span><span>Ruang pengetahuan pribadi</span></footer>
+      <footer class="footer"><span>ayowebku assist</span><span>Customer service berbasis AI</span></footer>
     </div>
     <script src="/app.js" defer></script>
   </body>

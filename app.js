@@ -1,6 +1,4 @@
 const state = { sources: [], messages: [] };
-const sourceForm = document.querySelector('#source-form');
-const sourceUrl = document.querySelector('#source-url');
 const sourceStatus = document.querySelector('#source-status');
 const sourceList = document.querySelector('#source-list');
 const messages = document.querySelector('#messages');
@@ -13,11 +11,11 @@ function escapeHtml(value) {
 
 function renderSources() {
   if (!state.sources.length) {
-    sourceList.innerHTML = '<div class="source-empty">Belum ada sumber tambahan</div>';
+    sourceList.innerHTML = '<div class="source-empty">Data website belum tersedia.</div>';
     return;
   }
   sourceList.innerHTML = state.sources.map((source, index) => `
-    <div class="source-card"><span class="source-favicon">↗</span><div class="source-info"><strong>${escapeHtml(source.title)}</strong><small>${escapeHtml(source.url)}</small></div><button class="remove-source" type="button" data-index="${index}" aria-label="Hapus sumber">×</button></div>
+    <div class="source-card"><span class="source-favicon">a</span><div class="source-info"><strong>${escapeHtml(source.title)}</strong><small>Disinkronkan dari website resmi Ayowebku</small></div><span class="source-check">✓</span></div>
   `).join('');
 }
 
@@ -26,40 +24,27 @@ function addMessage(role, content, loading = false) {
   article.className = `message ${role === 'user' ? 'user-message' : 'assistant-message'}`;
   article.innerHTML = role === 'user'
     ? `<div class="message-body"><p>${escapeHtml(content)}</p></div>`
-    : `<div class="avatar">t</div><div class="message-body"><p class="message-name">Tanya AI <span>sekarang</span></p><p class="${loading ? 'loading' : ''}">${loading ? 'Sedang membaca konteks...' : escapeHtml(content).replace(/\n/g, '<br>')}</p></div>`;
+    : `<div class="avatar">a</div><div class="message-body"><p class="message-name">Ayowebku Assist <span>sekarang</span></p><p class="${loading ? 'loading' : ''}">${loading ? 'Sedang mencari informasi...' : escapeHtml(content).replace(/\n/g, '<br>')}</p></div>`;
   messages.appendChild(article);
   messages.scrollTop = messages.scrollHeight;
   return article;
 }
 
-sourceForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const url = sourceUrl.value.trim();
-  if (!url) return;
-  const button = sourceForm.querySelector('button');
-  button.disabled = true;
-  button.textContent = 'Membaca...';
-  sourceStatus.textContent = 'Mengambil teks utama dari halaman...';
+async function loadAyowebkuSource() {
+  sourceStatus.textContent = 'Mengambil informasi terbaru...';
   try {
-    const response = await fetch('/api/scrape', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url }) });
+    const response = await fetch('/api/scrape', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
     const result = await response.json();
-    if (!response.ok) throw new Error(result.error || 'Halaman tidak dapat dibaca.');
+    if (!response.ok) throw new Error(result.error || 'Website belum dapat dibaca.');
     state.sources.push(result.source);
     renderSources();
-    sourceUrl.value = '';
-    sourceStatus.textContent = 'Sumber siap dipakai untuk menjawab pertanyaan.';
+    sourceStatus.textContent = 'Informasi siap digunakan untuk menjawab pertanyaan.';
   } catch (error) {
-    sourceStatus.textContent = error.message;
-  } finally {
-    button.disabled = false;
-    button.textContent = 'Baca halaman';
+    sourceStatus.textContent = 'Informasi website belum tersedia. Coba lagi nanti.';
   }
-});
+}
 
-sourceList.addEventListener('click', (event) => {
-  const button = event.target.closest('.remove-source');
-  if (button) { state.sources.splice(Number(button.dataset.index), 1); renderSources(); }
-});
+loadAyowebkuSource();
 
 chatForm.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -87,4 +72,4 @@ chatForm.addEventListener('submit', async (event) => {
 
 messageInput.addEventListener('input', () => { messageInput.style.height = 'auto'; messageInput.style.height = `${Math.min(messageInput.scrollHeight, 120)}px`; });
 messageInput.addEventListener('keydown', (event) => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); chatForm.requestSubmit(); } });
-document.querySelector('#clear-chat').addEventListener('click', () => { state.messages = []; messages.innerHTML = ''; addMessage('assistant', 'Percakapan direset. Apa yang ingin kamu ketahui?'); });
+document.querySelector('#clear-chat').addEventListener('click', () => { state.messages = []; messages.innerHTML = ''; addMessage('assistant', 'Percakapan baru dimulai. Apa yang ingin kamu tanyakan tentang Ayowebku?'); });

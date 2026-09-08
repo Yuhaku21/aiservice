@@ -1,6 +1,6 @@
-# Tanya AI
+# Ayowebku Assist
 
-Chatbot HTML, CSS, dan JavaScript dengan sumber pengetahuan dari halaman web, data dummy JSON, dan Groq API melalui Vercel Functions.
+Chatbot customer service Ayowebku dengan sumber pengetahuan yang diambil dari website resmi Ayowebku dan Groq API melalui Vercel Functions.
 
 ## Jalankan lokal
 
@@ -14,4 +14,4 @@ Salin `.env.example` menjadi `.env.local` untuk pengembangan lokal. API key hany
 
 Import repository/folder ini di Vercel, lalu tambahkan environment variable `GROQ_API_KEY`. `GROQ_MODEL` bersifat opsional dan default ke `llama-3.3-70b-versatile`.
 
-Fitur pembacaan halaman menggunakan serverless function `/api/scrape`. Beberapa website dapat menolak pengambilan otomatis atau membutuhkan autentikasi.
+Serverless function `/api/scrape` hanya membaca `https://ayowebku.com/` untuk menjaga jawaban tetap berasal dari sumber resmi.

@@ -1,5 +1,3 @@
-const knowledge = require('../data/knowledge.json');
-
 function send(response, status, body) {
   response.status(status).setHeader('Content-Type', 'application/json').end(JSON.stringify(body));
 }
@@ -9,10 +7,10 @@ module.exports = async (request, response) => {
   if (!process.env.GROQ_API_KEY) return send(response, 500, { error: 'GROQ_API_KEY belum diset di environment Vercel.' });
   const { message, history = [], sources = [] } = request.body || {};
   if (!message) return send(response, 400, { error: 'Pesan wajib diisi.' });
-  const sourceContext = sources.map((source) => `SUMBER: ${source.title} (${source.url})\n${source.text}`).join('\n\n');
-  const context = `DATA DUMMY: ${JSON.stringify(knowledge)}\n\nSUMBER HALAMAN:\n${sourceContext || 'Belum ada sumber halaman.'}`.slice(0, 30000);
+  const sourceContext = sources.map((source) => `SUMBER RESMI AYOWEBKU: ${source.title} (${source.url})\n${source.text}`).join('\n\n');
+  const context = (sourceContext || 'Data website resmi Ayowebku belum tersedia.').slice(0, 30000);
   const messages = [
-    { role: 'system', content: `Kamu adalah Tanya AI, asisten berbahasa Indonesia yang ringkas, jernih, dan jujur. Jawab berdasarkan konteks yang diberikan. Jika informasi tidak ada di konteks, katakan bahwa kamu belum menemukan jawabannya. Jangan mengarang sumber.\n\nKONTEKS PENGETAHUAN:\n${context}` },
+    { role: 'system', content: `Kamu adalah Ayowebku Assist, customer service AI berbahasa Indonesia. Jawab dengan ramah, ringkas, dan jelas berdasarkan konteks website resmi Ayowebku saja. Jika informasi tidak ada di konteks, katakan bahwa kamu belum menemukan jawabannya dan arahkan pengguna untuk menghubungi tim Ayowebku melalui website resmi. Jangan mengarang harga, fitur, kebijakan, atau sumber.\n\nKONTEKS WEBSITE RESMI AYOWEBKU:\n${context}` },
     ...history.slice(0, -1).filter((item) => ['user', 'assistant'].includes(item.role)).map((item) => ({ role: item.role, content: item.content })).slice(-8),
     { role: 'user', content: message },
   ];
