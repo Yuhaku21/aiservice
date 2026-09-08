@@ -1,55 +1,62 @@
 <!doctype html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#80498b" />
-    <title>Ayowebku Assist - Customer Service AI</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/styles.css" />
-  </head>
-  <body>
-    <div class="page-shell">
-      <header class="topbar">
-        <a class="brand" href="https://ayowebku.vercel.app/" aria-label="Kembali ke Ayowebku">
-          <img src="/logoweb.png" alt="Logo Ayowebku" class="brand-logo" />
-        </a>
-        <div class="topbar-actions"><span class="status-dot"></span><span>AI online</span><a class="back-button" href="https://ayowebku.vercel.app/">&larr; Ayowebku</a></div>
-      </header>
 
-      <main class="workspace">
-        <section class="chat-panel" aria-label="Percakapan Ayowebku Assist">
-          <div class="chat-header">
-            <div>
-              <p class="eyebrow">AYOWEBKU ASSIST</p>
-              <h2>Halo, ada yang bisa kami bantu?</h2>
-            </div>
-            <button class="clear-button" id="clear-chat" type="button" title="Mulai obrolan baru">Mulai baru</button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#80498b" />
+  <title>Ayowebku Assist - Customer Service AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="https://ayowebku.vercel.app/" aria-label="Kembali ke Ayowebku">
+        <img src="/logoweb.png" alt="Logo Ayowebku" class="brand-logo" />
+      </a>
+      <div class="topbar-actions"><span class="status-dot"></span><span>AI online</span><a class="back-button"
+          href="https://ayowebku.vercel.app/">&larr; Ayowebku</a></div>
+    </header>
+
+    <main class="workspace">
+      <section class="chat-panel" aria-label="Percakapan Ayowebku Assist">
+        <div class="chat-header">
+          <div>
+            <p class="eyebrow">AYOWEBKU ASSIST</p>
+            <h2>Halo, ada yang bisa kami bantu?</h2>
           </div>
+          <button class="clear-button" id="clear-chat" type="button" title="Mulai obrolan baru">Mulai baru</button>
+        </div>
 
-          <div class="messages" id="messages" aria-live="polite">
-            <article class="message assistant-message">
-              <div class="avatar">a</div>
-              <div class="message-body">
-                <p class="message-name">Ayowebku Assist <span>baru saja</span></p>
-                <p>Halo! Saya Ayowebku Assist. Ada yang ingin kamu tanyakan tentang Ayowebku?</p>
-              </div>
-            </article>
-          </div>
-
-          <form class="chat-form" id="chat-form">
-            <textarea id="message-input" rows="1" placeholder="Ketik pertanyaan kamu di sini..." aria-label="Pesan" required></textarea>
-            <div class="composer-footer">
-              <span class="composer-note">Jawaban berdasarkan website resmi Ayowebku</span>
-              <button class="send-button" type="submit" aria-label="Kirim pesan" title="Kirim pesan">Kirim <span>↗</span></button>
+        <div class="messages" id="messages" aria-live="polite">
+          <article class="message assistant-message">
+            <div class="avatar"><i class="bi bi-robot"></i></div>
+            <div class="message-body">
+              <p class="message-name">Ayowebku Assist <span>baru saja</span></p>
+              <p>Hai! 👋 Saya Ayowebku Assist. Bingung mau bikin website seperti apa? Tenang, saya siap bantu dari
+                memilih layanan sampai menemukan solusi yang paling cocok untuk kebutuhan Anda. 😊</p>
             </div>
-          </form>
-        </section>
-      </main>
+          </article>
+        </div>
 
-    </div>
-    <script src="/app.js" defer></script>
-  </body>
+        <form class="chat-form" id="chat-form">
+          <textarea id="message-input" rows="1" placeholder="Ketik pertanyaan kamu di sini..." aria-label="Pesan"
+            required></textarea>
+          <div class="composer-footer">
+            <button class="send-button" type="submit" aria-label="Kirim pesan" title="Kirim pesan">Kirim Pesan
+              <span>↗</span></button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+  </div>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <script src="/app.js" defer></script>
+</body>
+
 </html>
