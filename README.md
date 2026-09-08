@@ -14,10 +14,13 @@ Salin `.env.example` menjadi `.env.local` untuk pengembangan lokal. API key hany
 
 Import repository/folder ini di Vercel, lalu tambahkan environment variable `GROQ_API_KEY`. `GROQ_MODEL` bersifat opsional dan default ke `llama-3.1-8b-instant`.
 
-Serverless function `/api/scrape` membaca beberapa halaman Ayowebku. Tambahkan environment variable `AYOWEBKU_URLS` di Vercel dengan URL yang dipisahkan koma, contohnya:
+Serverless function `/api/scrape` membaca beberapa halaman Ayowebku. Untuk menambahkan halaman baru, buka `api/scrape.js` lalu tambahkan URL ke array `AYOWEBKU_URLS`:
 
-```env
-AYOWEBKU_URLS=https://ayowebku.vercel.app/,https://ayowebku.vercel.app/layanan,https://ayowebku.vercel.app/kontak
+```js
+const AYOWEBKU_URLS = [
+	'https://ayowebku.vercel.app/',
+	'https://ayowebku.vercel.app/halaman-baru',
+];
 ```
 
-Maksimal 8 URL akan dibaca paralel dan hanya hostname `ayowebku.vercel.app` yang diizinkan. Jika variable ini kosong, aplikasi memakai halaman utama.
+Semua URL akan dibaca paralel dan hanya hostname `ayowebku.vercel.app` yang diizinkan.
