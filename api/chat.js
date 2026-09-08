@@ -19,16 +19,20 @@ module.exports = async (request, response) => {
   if (!process.env.GROQ_API_KEY) return send(response, 500, { error: 'GROQ_API_KEY belum diset di environment Vercel.' });
   const { message, history = [], sources = [] } = request.body || {};
   if (!message) return send(response, 400, { error: 'Pesan wajib diisi.' });
-  const sourceContext = sources.map((source) => `SUMBER RESMI AYOWEBKU: ${source.title} (${source.url})\n${source.text}`).join('\n\n');
-  const context = (sourceContext || 'Data website resmi Ayowebku belum tersedia.').slice(0, 30000);
+  const sourceContext = sources.map((source) => `SUMBER RESMI AYOWEBKU: ${source.title} (${source.url})\n${source.text.slice(0, 3000)}`).join('\n\n');
+  const context = (sourceContext || 'Data website resmi Ayowebku belum tersedia.').slice(0, 24000);
+  const recentHistory = history.slice(0, -1)
+    .filter((item) => ['user', 'assistant'].includes(item.role))
+    .map((item) => ({ role: item.role, content: String(item.content).slice(-800) }))
+    .slice(-6);
   const messages = [
     { role: 'system', content: `Kamu adalah Ayowebku Assist, customer service AI berbahasa Indonesia. Jawab dengan ramah, ringkas, dan jelas berdasarkan konteks website resmi Ayowebku saja. Jika informasi tidak ada di konteks, katakan bahwa kamu belum menemukan jawabannya dan arahkan pengguna untuk menghubungi tim Ayowebku melalui website resmi. Jangan mengarang harga, fitur, kebijakan, atau sumber.\n\nKONTEKS WEBSITE RESMI AYOWEBKU:\n${context}` },
-    ...history.slice(0, -1).filter((item) => ['user', 'assistant'].includes(item.role)).map((item) => ({ role: item.role, content: item.content })).slice(-8),
+    ...recentHistory,
     { role: 'user', content: message },
   ];
   try {
     const model = await resolveModel(process.env.GROQ_API_KEY);
-    const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.GROQ_API_KEY}` }, body: JSON.stringify({ model, messages, temperature: 0.35, max_tokens: 700 }) });
+    const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.GROQ_API_KEY}` }, body: JSON.stringify({ model, messages, temperature: 0.35, max_tokens: 500 }) });
     const result = await groqResponse.json();
     if (!groqResponse.ok) return send(response, groqResponse.status, { error: result.error?.message || 'Groq menolak permintaan.' });
     return send(response, 200, { answer: result.choices?.[0]?.message?.content || 'Belum ada jawaban.' });
