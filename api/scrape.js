@@ -14,7 +14,10 @@ const AYOWEBKU_URLS = [
   'https://ayowebku.vercel.app/Jasa%20Website/jasa-website-travel.html',
   'https://ayowebku.vercel.app/Jasa%20Website/jasa-website-toko-online.html',
   'https://ayowebku.vercel.app/Jasa%20Website/jasa-website-company.html',
-  'https://ayowebku.vercel.app/Jasa%20Website/jasa-website-rental.html'
+  'https://ayowebku.vercel.app/Jasa%20Website/jasa-website-rental.html',
+  'https://ayowebku.vercel.app/Jasa%20Lainnya/jasa-design-poster.html',
+  'https://ayowebku.vercel.app/Jasa%20Lainnya/jasa-kelola-sosial-media.html',
+  'https://ayowebku.vercel.app/Jasa%20Lainnya/jasa-design-logo.html'
  
 
 ];
