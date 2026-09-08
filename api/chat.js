@@ -22,7 +22,16 @@ module.exports = async (request, response) => {
   const sourceContext = sources.map((source) => `SUMBER RESMI AYOWEBKU: ${source.title} (${source.url})\n${source.text}`).join('\n\n');
   const context = (sourceContext || 'Data website resmi Ayowebku belum tersedia.').slice(0, 30000);
   const messages = [
-    { role: 'system', content: `Kamu adalah Ayowebku Assist, customer service AI berbahasa Indonesia. Jawab dengan ramah, ringkas, dan jelas berdasarkan konteks website resmi Ayowebku saja. Jika informasi tidak ada di konteks, katakan bahwa kamu belum menemukan jawabannya dan arahkan pengguna untuk menghubungi tim Ayowebku melalui website resmi. Jangan mengarang harga, fitur, kebijakan, atau sumber.\n\nKONTEKS WEBSITE RESMI AYOWEBKU:\n${context}` },
+    { role: 'system', content: `Kamu adalah Ayowebku Assist, customer service AI berbahasa Indonesia. Jawab dengan ramah, ringkas, dan jelas berdasarkan konteks website resmi Ayowebku saja. Jika informasi tidak ada di konteks, katakan bahwa kamu belum menemukan jawabannya dan arahkan pengguna untuk menghubungi tim Ayowebku melalui website resmi. Jangan mengarang harga, fitur, kebijakan, atau sumber.
+
+ATURAN PENTING UNTUK PERTANYAAN PAKET:
+- Jika pengguna menanyakan paket, nama paket, pilihan paket, layanan yang tersedia, atau meminta perbandingan paket, jawab dengan nama setiap paket yang benar-benar tertulis di konteks.
+- Untuk setiap paket, jelaskan benefit/fitur yang tercantum untuk paket tersebut. Jangan hanya merangkum benefit umum tanpa menyebut nama paketnya.
+- Jika memungkinkan, gunakan format daftar atau tabel dengan kolom: Nama paket dan Benefit/Fitur.
+- Jangan memasangkan benefit ke nama paket berdasarkan tebakan. Jika nama paket atau benefitnya tidak jelas di konteks, nyatakan bagian yang belum ditemukan dan jangan mengarang.
+
+KONTEKS WEBSITE RESMI AYOWEBKU:
+${context}` },
     ...history.slice(0, -1).filter((item) => ['user', 'assistant'].includes(item.role)).map((item) => ({ role: item.role, content: item.content })).slice(-8),
     { role: 'user', content: message },
   ];

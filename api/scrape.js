@@ -11,6 +11,12 @@ const AYOWEBKU_URLS = [
   // Tambahkan halaman Ayowebku baru di sini.
   'https://ayowebku.vercel.app/Ayosite/ayosite.html',
   'https://ayowebku.vercel.app/Jasa%20Website/jasa-website-sekolah.html',
+  'https://ayowebku.vercel.app/Jasa%20Website/jasa-website-travel.html',
+  'https://ayowebku.vercel.app/Jasa%20Website/jasa-website-toko-online.html',
+  'https://ayowebku.vercel.app/Jasa%20Website/jasa-website-company.html',
+  'https://ayowebku.vercel.app/Jasa%20Website/jasa-website-rental.html'
+ 
+
 ];
 
 async function scrapePage(url) {

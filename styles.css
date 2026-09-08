@@ -37,8 +37,8 @@ button { cursor: pointer; }
 .avatar { flex: 0 0 34px; width: 34px; height: 34px; border-radius: 10px 10px 10px 3px; font-size: 19px; }
 .message-body { min-width: 0; overflow-wrap: anywhere; font-size: 14px; line-height: 1.65; }
 .message-body p { margin: 0; }
-.table-wrap { max-width: 100%; margin: 14px 0; overflow: hidden; border: 1px solid #d8c8dc; border-radius: 8px; background: #fff; }
-.response-table { width: 100%; max-width: 100%; table-layout: fixed; border-collapse: collapse; color: var(--ink); font-size: 12px; line-height: 1.5; }
+.table-wrap { max-width: 100%; margin: 14px 0; overflow-x: auto; overflow-y: hidden; border: 1px solid #d8c8dc; border-radius: 8px; background: #fff; -webkit-overflow-scrolling: touch; }
+.response-table { width: max-content; min-width: 100%; border-collapse: collapse; color: var(--ink); font-size: 12px; line-height: 1.5; }
 .response-table th, .response-table td { padding: 10px 12px; border-right: 1px solid #e4dbe6; border-bottom: 1px solid #e4dbe6; text-align: left; vertical-align: top; }
 .response-table th:last-child, .response-table td:last-child { border-right: 0; }
 .response-table tr:last-child td { border-bottom: 0; }
