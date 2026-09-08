@@ -1,22 +1,10 @@
 const state = { sources: [], messages: [] };
-const sourceStatus = document.querySelector('#source-status');
-const sourceList = document.querySelector('#source-list');
 const messages = document.querySelector('#messages');
 const chatForm = document.querySelector('#chat-form');
 const messageInput = document.querySelector('#message-input');
 
 function escapeHtml(value) {
   return value.replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#039;', '"': '&quot;' }[character]));
-}
-
-function renderSources() {
-  if (!state.sources.length) {
-    sourceList.innerHTML = '<div class="source-empty">Data website belum tersedia.</div>';
-    return;
-  }
-  sourceList.innerHTML = state.sources.map((source, index) => `
-    <div class="source-card"><span class="source-favicon">a</span><div class="source-info"><strong>${escapeHtml(source.title)}</strong><small>Disinkronkan dari website resmi Ayowebku</small></div><span class="source-check">✓</span></div>
-  `).join('');
 }
 
 function addMessage(role, content, loading = false) {
@@ -31,17 +19,12 @@ function addMessage(role, content, loading = false) {
 }
 
 async function loadAyowebkuSource() {
-  sourceStatus.textContent = 'Mengambil informasi terbaru...';
   try {
     const response = await fetch('/api/scrape', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
     const result = await response.json();
     if (!response.ok) throw new Error(result.error || 'Website belum dapat dibaca.');
     state.sources.push(result.source);
-    renderSources();
-    sourceStatus.textContent = 'Informasi siap digunakan untuk menjawab pertanyaan.';
-  } catch (error) {
-    sourceStatus.textContent = 'Informasi website belum tersedia. Coba lagi nanti.';
-  }
+  } catch (error) {}
 }
 
 loadAyowebkuSource();
