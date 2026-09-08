@@ -66,10 +66,10 @@ button { cursor: pointer; }
   .topbar-actions { font-size: 0; }
   .back-button { margin-left: 12px; font-size: 10px; }
   .workspace { padding: 0; }
-  .chat-panel { min-height: calc(100vh - 66px); border: 0; border-radius: 0; box-shadow: none; }
+  .chat-panel { min-height: 0; border: 0; border-radius: 0; box-shadow: none; }
   .chat-header { padding: 22px 18px 18px; }
-  .messages { padding: 26px 18px 16px; }
+  .messages { flex: 0 1 auto; max-height: calc(100vh - 205px); padding: 26px 18px 16px; }
   .message { max-width: 92%; }
-  .chat-form { margin: 0 12px 12px; }
+  .chat-form { position: sticky; bottom: 8px; margin: 0 12px 12px; }
   .composer-note { max-width: 190px; }
 }
