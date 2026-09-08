@@ -23,7 +23,7 @@ async function loadAyowebkuSource() {
     const response = await fetch('/api/scrape', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
     const result = await response.json();
     if (!response.ok) throw new Error(result.error || 'Website belum dapat dibaca.');
-    state.sources.push(result.source);
+    state.sources.push(...(result.sources || [result.source]));
   } catch (error) {}
 }
 
