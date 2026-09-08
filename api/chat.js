@@ -9,13 +9,15 @@ module.exports = async (request, response) => {
   if (!message) return send(response, 400, { error: 'Pesan wajib diisi.' });
   const sourceContext = sources.map((source) => `SUMBER RESMI AYOWEBKU: ${source.title} (${source.url})\n${source.text}`).join('\n\n');
   const context = (sourceContext || 'Data website resmi Ayowebku belum tersedia.').slice(0, 30000);
+  const configuredModel = process.env.GROQ_MODEL?.trim();
+  const model = configuredModel && configuredModel !== 'llama-3.3-70b-versatile' ? configuredModel : 'llama-3.1-8b-instant';
   const messages = [
     { role: 'system', content: `Kamu adalah Ayowebku Assist, customer service AI berbahasa Indonesia. Jawab dengan ramah, ringkas, dan jelas berdasarkan konteks website resmi Ayowebku saja. Jika informasi tidak ada di konteks, katakan bahwa kamu belum menemukan jawabannya dan arahkan pengguna untuk menghubungi tim Ayowebku melalui website resmi. Jangan mengarang harga, fitur, kebijakan, atau sumber.\n\nKONTEKS WEBSITE RESMI AYOWEBKU:\n${context}` },
     ...history.slice(0, -1).filter((item) => ['user', 'assistant'].includes(item.role)).map((item) => ({ role: item.role, content: item.content })).slice(-8),
     { role: 'user', content: message },
   ];
   try {
-    const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.GROQ_API_KEY}` }, body: JSON.stringify({ model: process.env.GROQ_MODEL || 'llama-3.3-70b-versatile', messages, temperature: 0.35, max_tokens: 700 }) });
+    const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.GROQ_API_KEY}` }, body: JSON.stringify({ model, messages, temperature: 0.35, max_tokens: 700 }) });
     const result = await groqResponse.json();
     if (!groqResponse.ok) return send(response, groqResponse.status, { error: result.error?.message || 'Groq menolak permintaan.' });
     return send(response, 200, { answer: result.choices?.[0]?.message?.content || 'Belum ada jawaban.' });

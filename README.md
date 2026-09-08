@@ -12,6 +12,6 @@ Salin `.env.example` menjadi `.env.local` untuk pengembangan lokal. API key hany
 
 ## Deploy ke Vercel
 
-Import repository/folder ini di Vercel, lalu tambahkan environment variable `GROQ_API_KEY`. `GROQ_MODEL` bersifat opsional dan default ke `llama-3.3-70b-versatile`.
+Import repository/folder ini di Vercel, lalu tambahkan environment variable `GROQ_API_KEY`. `GROQ_MODEL` bersifat opsional dan default ke `llama-3.1-8b-instant`.
 
 Serverless function `/api/scrape` hanya membaca `https://ayowebku.com/` untuk menjaga jawaban tetap berasal dari sumber resmi.
